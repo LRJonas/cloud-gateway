@@ -17,7 +17,7 @@ public class MsgatewayApplication {
 	public RouteLocator routes(RouteLocatorBuilder builder) {
 		return builder
 				.routes()
-				//Microservioço Funcionaŕios.route()
+					.route(r -> r.path("/api/v1/propostas/**").uri("lb://propostas"))
 				.build();
 	}
 
