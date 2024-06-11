@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
+import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 @EnableDiscoveryClient
@@ -14,10 +15,13 @@ public class MsgatewayApplication {
 		SpringApplication.run(MsgatewayApplication.class, args);
 	}
 
+	@Bean
 	public RouteLocator routes(RouteLocatorBuilder builder) {
 		return builder
 				.routes()
-				//Microservioço Funcionaŕios.route()
+					.route(r -> r.path("/api/v1/propostas/**").uri("lb://propostas"))
+					.route(r -> r.path("/api/v1/funcionarios/**").uri("lb://funcionarios"))
+					.route(r -> r.path("/api/v1/resultados/**").uri("lb://resultados"))
 				.build();
 	}
 
